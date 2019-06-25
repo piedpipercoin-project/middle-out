@@ -1,0 +1,15 @@
+display_name: jobs
+
+info: true
+
+build: crystal build --warnings all --stats ./app/jobs.cr -o build/jobs
+
+run: ./build/jobs
+
+run_args:
+
+watch:
+  - ./app/jobs.cr
+  - ./src/jobs/*.cr
+  - ./src/jobs/**/*.cr
+  - ./src/helpers/**/*.cr

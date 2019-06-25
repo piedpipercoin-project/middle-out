@@ -1,0 +1,51 @@
+version: '3'
+
+networks:
+  ppi-website-dev:
+    external: false
+
+volumes:
+  ppi-redis-data:
+
+services:
+  redis:
+    image: redis
+    command: redis-server
+    restart: unless-stopped
+    ports:
+      - 6379
+    volumes:
+      - ppi-redis-data:/data
+    networks:
+      - ppi-website-dev
+  
+  out:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    command: ./sentry -c .sentry_out.yml
+    restart: unless-stopped
+    depends_on:
+      - redis
+    volumes:
+      - './app:/usr/src/app/out/app/'
+      - './src:/usr/src/app/out/src/'
+    ports:
+      - 7171
+    networks:
+      - ppi-website-dev
+  
+  jobs:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    command: ./sentry -c .sentry_jobs.yml
+    environment:
+      REDIS_URL: "redis://redis:6379/1"
+    volumes:
+      - './app:/usr/src/app/out/app/'
+      - './src:/usr/src/app/out/src/'
+    depends_on:
+      - redis
+    networks:
+      - ppi-website-dev

@@ -1,0 +1,15 @@
+display_name: out
+
+info: true
+
+build: crystal build --warnings all --stats ./app/out.cr -o build/out
+
+run: ./build/out
+
+run_args:
+
+watch:
+  - ./app/out.cr
+  - ./src/endpoints/**/*.cr
+  - ./src/views/**/*.cr
+  - ./src/helpers/**/*.cr
