@@ -1,4 +1,4 @@
-class PingDdex < Mosquito::PeriodicJob
+class PingIdax < Mosquito::PeriodicJob
   run_every 4.minute
 
   def perform
@@ -6,14 +6,16 @@ class PingDdex < Mosquito::PeriodicJob
 
     log("getIdaxPro")
     url = "https://openapi.idax.pro/api/v2/ticker?pair=PPI_BTC"
-    load = Helpers::Mapping::GetIdaxPro::Read.from_json(get(url).to_json)            
+    load = Helpers::Mapping::GetIdaxPro::Read.from_json(get(url).to_json)
+    mName = "IDAX"
 
     if load && load.code == 10000
       load.ticker.each do |ticker|
-        log("pair:" + ticker.pair)
-        log("price:" + ticker.last)
-        log("high:" + ticker.high)
-        log("volume:" + ticker.vol)
+        RC.multi do |multi|
+          multi.set("market:#{mName}:price", ticker.last)
+          multi.set("market:#{mName}:pair", ticker.pair.gsub("_", "-"))
+          multi.set("market:#{mName}:volume", ticker.vol)
+        end
       end
     end
     log("------------------------------")

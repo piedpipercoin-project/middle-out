@@ -7,12 +7,14 @@ class PingDdex < Mosquito::PeriodicJob
     log("getDdexIo")
     url = "https://api.ddex.io/v3/markets/PPI-WETH/ticker"
     load = Helpers::Mapping::GetDdexIo::Read.from_json(get(url).to_json)            
+    mName = "DDEX"
 
     if load && load.status == 0
-      log("pair:" + load.data.ticker.marketId)
-      log("price:" + load.data.ticker.price)
-      log("high:" + load.data.ticker.high)
-      log("volume:" + load.data.ticker.volume)
+      RC.multi do |multi|
+        multi.set("market:#{mName}:price", load.data.ticker.price)
+        multi.set("market:#{mName}:pair", load.data.ticker.marketId)
+        multi.set("market:#{mName}:volume", load.data.ticker.volume)
+      end
     end
     log("------------------------------")
   end
