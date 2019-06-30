@@ -3,8 +3,8 @@ require "onyx/env"
 require "onyx/logger"
 require "crest"
 
-require "../src/endpoints/**"
-require "../src/views/**"
+require "./endpoints/**"
+require "./views/**"
 
 # routes
 Onyx::HTTP.get "/health", Endpoints::Health::Status

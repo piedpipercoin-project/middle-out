@@ -3,9 +3,9 @@ version: 0.1.0
 
 targets:
   out:
-    main: app/out.cr
+    main: src/out.cr
   jobs:
-    main: app/jobs.cr
+    main: src/jobs.cr
 
 crystal: 0.29.0
 

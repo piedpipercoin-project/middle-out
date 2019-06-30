@@ -2,7 +2,7 @@ require "mosquito"
 require "crest"
 require "json"
 
-require "../src/helpers/**"
-require "../src/jobs/**"
+require "./helpers/**"
+require "./jobs/**"
 
 Mosquito::Runner.start
