@@ -1,10 +1,10 @@
 struct Endpoints::Exchanges::All
   include Onyx::HTTP::Endpoint
   
-  @payload = Hash(String, Array(NamedTuple(market: String, price: String, pair: String, logo: String))).new
+  @payload = Hash(String, Array(NamedTuple(market: String, price: String, pair: String, logo: String, link: String))).new
 
   def call
-    @payload["exchanges"] = [] of NamedTuple(market: String, price: String, pair: String, logo: String)
+    @payload["exchanges"] = [] of NamedTuple(market: String, price: String, pair: String, logo: String, link: String)
 
     # forkdelta data
     @payload["exchanges"] << {
