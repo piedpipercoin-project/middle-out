@@ -2,14 +2,14 @@ display_name: out
 
 info: true
 
-build: crystal build --warnings all --stats ./app/out.cr -o build/out
+build: crystal build --warnings all --stats ./src/out.cr -o bin/out
 
-run: ./build/out
+run: ./bin/out
 
 run_args:
 
 watch:
-  - ./app/out.cr
+  - ./src/out.cr
   - ./src/endpoints/**/*.cr
   - ./src/views/**/*.cr
   - ./src/helpers/**/*.cr

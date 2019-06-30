@@ -25,10 +25,11 @@ services:
       dockerfile: Dockerfile.dev
     command: ./sentry -c .sentry_out.yml
     restart: unless-stopped
+    environment:
+      ONYX_PORT: "7171"
     depends_on:
       - redis
     volumes:
-      - './app:/usr/src/app/out/app/'
       - './src:/usr/src/app/out/src/'
     ports:
       - 7171
@@ -43,7 +44,6 @@ services:
     environment:
       REDIS_URL: "redis://redis:6379/1"
     volumes:
-      - './app:/usr/src/app/out/app/'
       - './src:/usr/src/app/out/src/'
     depends_on:
       - redis
