@@ -7,5 +7,4 @@ WORKDIR /usr/src/app/out/
 
 COPY . .
 
-RUN crystal build --warnings all --stats --progress --release -o bin/out app/out.cr
-RUN crystal build --warnings all --stats --progress --release -o bin/jobs app/jobs.cr
+RUN crystal build --warnings all --stats --progress --release -o bin/jobs src/jobs.cr
