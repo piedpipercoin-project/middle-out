@@ -1,2 +1,2 @@
-out: bin/out
+web: bin/out
 jobs: bin/jobs
